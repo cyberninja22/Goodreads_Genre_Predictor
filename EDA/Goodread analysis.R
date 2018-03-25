@@ -52,7 +52,7 @@ View(Ratings)
 write.table(Ratings ,'/Users/sharathg/Desktop/DataSets/goodbooks-10k/BookRatings',sep = ',')
 write.table(ratingsby_id,'/Users/sharathg/Desktop/DataSets/goodbooks-10k/Uniq_Avg_rtg',sep = ',')
 
-#################################################
+################################################
 ####### Building a unique user id , using ratings dataset 
 #this gives the average rating given by each user in goodreads (includes ratings to all books )
 uui<-ratings%>%group_by(ratings$user_id)%>%arrange(user_id)%>%summarise( avg_rtng_by_user = mean(rating))
