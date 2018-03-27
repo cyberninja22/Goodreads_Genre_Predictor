@@ -16,13 +16,13 @@ tags_books<-read_csv("/Users/sharathg/Desktop/DataSets/goodbooks-10k/tags.csv")
 to_read<- read_csv("/Users/sharathg/Desktop/DataSets/goodbooks-10k/to_read.csv")
 
 #####Checking the str and EDA of the data. 
-l<-c(book_tags,books,ratings,tags_books,to_read)
-k<-sapply(l, View)
+#l<-c(book_tags,books,ratings,tags_books,to_read)
+#k<-sapply(l, View)
 View(books)
 View()
-for (i in length(l) ){
-   View(l[i])
-}
+#for (i in length(l) ){
+#   View(l[i])
+#}
 #All the above are failed functions . 
 View(ratings)
 View(tags_books)
