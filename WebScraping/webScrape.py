@@ -31,9 +31,12 @@ for div in divTags:
 
 mainLink = 'https://www.goodreads.com'
 
+print "Scraping links found......."
+
 # Parsing through each link found to scrape the data needed
 for link in bookLinks:
 
+	
 	# Appending link extracted with the main link
 	bookurl = mainLink + link
 
@@ -72,5 +75,5 @@ fileName = 'books.csv'
 # Saving the data frame to a CSV File
 bookDF.to_csv(fileName, encoding='utf-8')
 
-
+print "Saved data scraped......."
 
