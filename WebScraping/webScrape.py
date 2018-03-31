@@ -13,7 +13,7 @@ bookAuthors = []
 bookGenres = []
 
 # Intialize mainUrl i.e the search page containing all books that need to be scraped
-mainUrl = 'https://www.goodreads.com/genres/new_releases/biography'
+mainUrl = 'https://www.goodreads.com/genres/new_releases/non-fiction'
 response = requests.get(mainUrl)
 html = response.content
 
@@ -47,10 +47,12 @@ for link in bookLinks:
 
 	# Extracting the book's title and storing it in a list
 	title = soup2.find('h1', attrs={'class': 'bookTitle'})
-	bookTitles.append(title.text)
+	bookTitle = title.text
+	bookTitle = bookTitle.strip('\n')
+	bookTitles.append(bookTitle)
 
 	# Extracting the book's description and storing it in a list
-	description = soup2.find('span', attrs={'id': re.compile('(freeText)\w+')})
+	description = soup2.find('span', attrs={'id': re.compile('(freeText)\d+')})
 	bookDescriptions.append(description.text)
 
 	# Extracting the book's author and storing it in a list
@@ -70,7 +72,7 @@ bookDF = pd.DataFrame({'title': bookTitles,
 # Name the file to save the data frame, make sure to change the file name every time
 # you change the mainUrl that you wish to extract beacuse it will rewrite the 
 # original file which saved the previous data extracted
-fileName = 'books.csv'
+fileName = 'books13.csv'
 
 # Saving the data frame to a CSV File
 bookDF.to_csv(fileName, encoding='utf-8')
