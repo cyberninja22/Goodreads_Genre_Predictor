@@ -15,7 +15,7 @@ for line in open("books1.csv"):
 
 # eg: the last file is say books10.csv, then the range is from 2 to 11
 
-for num in range(2,13):
+for num in range(2,14):
     f = open("books"+str(num)+".csv")
     f.next() # Done to skip the header
     for line in f:
