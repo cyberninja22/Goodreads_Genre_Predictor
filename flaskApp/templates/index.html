@@ -1,0 +1,33 @@
+<!-- ''''' @author : Megha Lokanadham ''''' -->
+
+<!doctype html>
+<html>
+<head>
+	<title>Text Classifier as a Flask API</title>
+	<link rel="stylesheet" href="{{ url_for('static',
+		filename='templates/style.css') }}">
+</head>
+
+<body>
+	<h2>Book Genre Predictor</h2>
+	{% from "_formhelpers.html" import render_field %}
+	<div>Book Summary</div>
+	<form method=post action = "/predict">
+		<dl>
+			{{ render_field(form.sayhello) }}
+		</dl>
+		<input type=submit value='Predict' name='submit_btn'>
+	</form>
+
+  <h2>Sentiment Analysis</h2>
+  {% from "_formhelpers.html" import render_field %}
+  <div>Enter Text </div>
+  <form method=post action = "/predict_sentiment">
+    <dl>
+      {{ render_field(form.sayhello) }}
+    </dl>
+    <input type=submit value='Sentiment' name='submit_btn'>
+  </form>
+</body>
+
+</html>
