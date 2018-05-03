@@ -16,25 +16,6 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
 
-# def langRec(text):
-#     k=detect(text)
-#     return k
-
-def thresh(num):
-	sentiment=[]
-	if num>=0.1:
-		sentiment.append('Positive')
-	elif -0.1<=num<=0.1:
-		sentiment.append('Neutral')
-	else:
-		sentiment.append('Negative')
-	return(sentiment[0])
-
-def sentimentA(text):
-	analyser = SentimentIntensityAnalyzer()
-	snt = analyser.polarity_scores(text)
-	return snt['compound']
-
 
 
 class HelloForm(Form):
@@ -45,6 +26,9 @@ class HelloForm(Form):
 def index():
 	form = HelloForm(request.form)
 	return flask.render_template('index.html', form = form)
+
+
+# Implements the Text classfier model
 
 @app.route('/predict', methods=['POST'])
 
@@ -79,6 +63,8 @@ def make_prediction():
 		
 		return render_template('result.html', name = label)
 
+# Implements the Sentiment analysis model
+
 @app.route('/predict_sentiment', methods=['POST'])
 
 
@@ -86,18 +72,39 @@ def predict_sentiment():
 
 	form = HelloForm(request.form)
 
-	text = request.form['sayhello']
+	if request.method == 'POST':
 
-	sentiment_score = sentimentA(text)
+		loader = []
+		description = request.form['sayhello']
 
-	sentiment = thresh(sentiment_score)
+        
+		tokens = word_tokenize(description)
+		tokens = [w.lower() for w in tokens]
+		table = dict.fromkeys(range(32))
+		stripped = [w.translate(table) for w in tokens]
+		words = [word for word in stripped if word.isalpha()]
+		loader.append(words)
 
-	return render_template('result.html', name = sentiment)
+		entry = pd.Series(loader)
+		x = entry.iloc[0]
+		empty = " "
+		for i in x:
+			empty+= i
+			empty += ','
+		df = pd.Series(empty)
+		print(df.iloc[0:1])
 
+		prediction = modelS.predict(df.iloc[0:1])
+		labelS = prediction
+
+	return render_template('result.html', name = labelS)
+
+
+# Reads the pickle files for the models trained in the main fucntion
 
 if __name__ == '__main__':
 	model = pickle.load(open('model/logReg.pkl', "rb"))
-	# model = joblib.load()
+	modelS = pickle.load(open('model/best_nb_bigram.pkl', "rb"))
 	app.run(host='0.0.0.0', port=8000, debug=True)
 
 

@@ -6,6 +6,7 @@ from nltk.corpus import stopwords
 import string
 
 # Read data file but ensure the file is in the working directory before running the code
+# This is the datset generated after buckting the 52 genres into 7
 data = pd.read_csv("recommender_data.csv", encoding = 'utf8')
 
 # Extracting the decription and genre labels from the data file
